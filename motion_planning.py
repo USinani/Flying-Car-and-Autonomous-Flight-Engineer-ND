@@ -2,7 +2,7 @@ import argparse
 import time
 import msgpack
 from enum import Enum, auto
-
+import csv
 import numpy as np
 
 from planning_utils import a_star, heuristic, create_grid
@@ -120,14 +120,22 @@ class MotionPlanning(Drone):
         self.target_position[2] = TARGET_ALTITUDE
 
         # TODO: read lat0, lon0 from colliders into floating point values
-        self.get = lat0
-        self.get = lon0
-        # TODO: set home position to (lon0, lat0, 0)
+        with open ('colliders', newline = '') as f:
+            reader = csv.reader(f)
+            # read the first line
+            first_row = next(reader)
 
-        # TODO: retrieve current global position
- 
-        # TODO: convert to current local position using global_to_local()
+        # TODO: set home position to (lon0, lat0, 0)
+        lat0 = float(row1[0].split()[1])
+        lon0 = float(forw1[1].split()[1]
+        self.set_home_position(lon0, lat0, 0)
         
+        # TODO: retrieve current global position
+        drone_global_position = self.global_position
+        
+        # TODO: convert to current local position using global_to_local()
+        drone_local_position = self.global_position
+
         print('global home {0}, position {1}, local position {2}'.format(self.global_home, self.global_position,
                                                                          self.local_position))
         # Read in obstacle map
