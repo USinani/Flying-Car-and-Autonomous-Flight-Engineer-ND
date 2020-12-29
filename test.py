@@ -1,9 +1,12 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-
 def first_method():
     print('hello from first method')
+    x = 12
+    y = 15
+    total = x + y
+    return print(total)
 
 def second_method():
     print('hello from second method')
@@ -11,9 +14,18 @@ def second_method():
 def third_method():
     print('hello from third method')
 
-# third_method()
+# Python built-in functions
 
+def builtin_functions():
+    # print function
+    objects = 3
+    print('hello',objects)
+    
+    # list function
+    
+    # open function
 
+'''
 class Rectangle:
    def __init__(self, length, breadth, unit_cost=0):
        self.length = length
@@ -43,6 +55,4 @@ class Square:
 
 s = Square(234, 34, 354)
 print('Area of Square',  (s.calculate_area()) )
-
-
-
+'''

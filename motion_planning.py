@@ -120,52 +120,33 @@ class MotionPlanning(Drone):
         self.target_position[2] = TARGET_ALTITUDE
 
         # TODO: read lat0, lon0 from colliders into floating point values
-        with open ('colliders', newline = '') as f:
-            reader = csv.reader(f)
-            # read the first line
-            first_row = next(reader)
+        # with open ('colliders', newline = '') as f:
+        colliders_file = 'colliders.csv'
 
         # TODO: set home position to (lon0, lat0, 0)
-        lat0 = float(row1[0].split()[1])
-        lon0 = float(forw1[1].split()[1]
+        lat0, lon0 = read_home(colliders_file)
+        
         self.set_home_position(lon0, lat0, 0)
         
-        # TODO: retrieve current global position
-        drone_global_position = self.global_position
-        
-        # TODO: convert to current local position using global_to_local()
-        drone_local_position = self.global_position
+#         self.target_position[2] = TARGET_ALTITUDE
+
+        colliders_file = 'colliders.csv'
+        # TODO: read lat0, lon0 from colliders into floating point values
+        lat0, lon0 = read_home(colliders_file)
+        print(f'Home lat : {lat0}, lon : {lon0}')
+        # # # TODO: set home position to (lat0, lon0, 0)
+        self.set_home_position(lon0, lat0, 0)
 
         print('global home {0}, position {1}, local position {2}'.format(self.global_home, self.global_position,
                                                                          self.local_position))
         # Read in obstacle map
-        data = np.loadtxt('colliders.csv', delimiter=',', dtype='Float64', skiprows=2)
-        
-        # Define a grid for a particular altitude and safety margin around obstacles
-        grid, north_offset, east_offset = create_grid(data, TARGET_ALTITUDE, SAFETY_DISTANCE)
-        print("North offset = {0}, east offset = {1}".format(north_offset, east_offset))
-        # Define starting point on the grid (this is just grid center)
-        grid_start = (-north_offset, -east_offset)
-        # TODO: convert start position to current position rather than map center
-        
-        # Set goal as some arbitrary position on the grid
-        grid_goal = (-north_offset + 10, -east_offset + 10)
-        # TODO: adapt to set goal as latitude / longitude position and convert
+        data = np.loadtxt(colliders_file, delimiter=',', dtype='Float64', skiprows=2)
 
-        # Run A* to find a path from start to goal
-        # TODO: add diagonal motions with a cost of sqrt(2) to your A* implementation
-        # or move to a different search space such as a graph (not done here)
-        print('Local Start and Goal: ', grid_start, grid_goal)
-        path, _ = a_star(grid, heuristic, grid_start, grid_goal)
-        # TODO: prune path to minimize number of waypoints
-        # TODO (if you're feeling ambitious): Try a different approach altogether!
-
-        # Convert path to waypoints
-        waypoints = [[p[0] + north_offset, p[1] + east_offset, TARGET_ALTITUDE, 0] for p in path]
         # Set self.waypoints
-        self.waypoints = waypoints
-        # TODO: send waypoints to sim (this is just for visualization of waypoints)
+        self.waypoints = calculate_waypoints(self.global_position, goal_global_position, self.global_home, data, TARGET_ALTITUDE, SAFETY_DISTANCE)
+        # TODO: send waypoints to sim
         self.send_waypoints()
+
 
     def start(self):
         self.start_log("Logs", "NavLog.txt")
