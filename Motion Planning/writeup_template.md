@@ -29,18 +29,14 @@ You're reading it! Below I describe how I addressed each rubric point and where 
 #### 1. Explain the functionality of what's provided in `motion_planning.py` and `planning_utils.py`
 These scripts contain a basic planning implementation that includes...
 
-And here's a lovely image of my results
+Here are some image illustration my results
 
-![Top Down view](./imgs/up_high.png)
-![Top Down view](./imgs/down.png)
-![Top Down view](./imgs/side_view.png)
+![Top Down view](./misc/images/Grid_visualisation.png)
+![Top Down view](./misc/Grid.png)
+![Top Down view](./misc/in_the_trees.png)
+![Top Down view](./misc/voxmap.png)
+![Top Down view](./misc/map.png)
 
-Here's | A | Snappy | Table
---- | --- | --- | ---
-1 | `highlight` | **bold** | 7.41
-2 | a | b | c
-3 | *italic* | text | 403
-4 | 2 | 3 | abcd
 
 ### Implementing Your Path Planning Algorithm
 
@@ -55,7 +51,6 @@ posX,posY,posZ,halfSizeX,halfSizeY,halfSizeZ
 -300.2389,-439.2315,85.5,5,5,85.5
 -290.2389,-439.2315,85.5,5,5,85.5
 -280.2389,-439.2315,85.5,5,5,85.5
-
 
 And here is a lovely picture of our downtown San Francisco environment from above!
 ![Map of SF](./misc/map.png)
