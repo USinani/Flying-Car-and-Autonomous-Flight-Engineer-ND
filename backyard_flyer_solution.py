@@ -137,8 +137,6 @@ class BackyardFlyer(Drone):
         self.flight_state = States.ARMING
 
 
-
-
     def takeoff_transition(self):
         """TODO: Fill out this method
         
