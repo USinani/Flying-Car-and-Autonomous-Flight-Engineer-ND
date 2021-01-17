@@ -1,8 +1,6 @@
 # FCND - 3D Motion Planning
 ![Quad Image](./misc/enroute.png)
 
-
-
 This project is a continuation of the Backyard Flyer project where you executed a simple square shaped flight path. In this project you will integrate the techniques that you have learned throughout the last several lessons to plan a path through an urban environment. Check out the [project rubric](https://review.udacity.com/#!/rubrics/1534/view) for more detail on what constitutes a passing submission.
 
 ## Option to do this project in a GPU backed virtual machine in the Udacity classroom!
@@ -22,7 +20,7 @@ If you haven't already, set up your Python environment and get all the relevant 
 git clone https://github.com/udacity/FCND-Motion-Planning
 ```
 ### Step 4: Test setup
-The first task in this project is to test the [solution code](https://github.com/udacity/FCND-Motion-Planning/blob/master/backyard_flyer_solution.py) for the Backyard Flyer project in this new simulator. Verify that your Backyard Flyer solution code works as expected and your drone can perform the square flight path in the new simulator. To do this, start the simulator and run the [`backyard_flyer_solution.py`](https://github.com/udacity/FCND-Motion-Planning/blob/master/backyard_flyer_solution.py) script.
+The first task in this project is to test the [solution code](https://github.com/USinani/Flying-Car-and-Autonomous-Flight-Engineer-ND/Backyard_Flyer_Solution.py) for the Backyard Flyer project in this new simulator. Verify that your Backyard Flyer solution code works as expected and your drone can perform the square flight path in the new simulator. To do this, start the simulator and run the [`backyard_flyer_solution.py`](https://github.com/USinani/Flying-Car-and-Autonomous-Flight-Engineer-ND/Backyard_Flyer_Solution.py) script.
 
 ```sh
 source activate fcnd # if you haven't already sourced your Python environment, do so now.
