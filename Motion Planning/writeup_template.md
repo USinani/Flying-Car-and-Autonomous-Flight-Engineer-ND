@@ -40,7 +40,6 @@ Here are some image illustration my results
 ![Top Down view](./misc/voxmap.png)
 ![Top Down view](./misc/map.png)
 
-
 ### Implementing Your Path Planning Algorithm
 
 #### 1. Set your global home position
@@ -61,7 +60,6 @@ And here is a lovely picture of our downtown San Francisco environment from abov
 #### 2. Set your current local position
 Here as long as you successfully determine your local position relative to global home you'll be all set. Explain briefly how you accomplished this in your code.
 
-
 Meanwhile, here's a picture of me flying through the trees!
 ![Forest Flying](./misc/in_the_trees.png)
 
@@ -76,7 +74,6 @@ Minimal requirement here is to modify the code in planning_utils() to update the
 
 #### 6. Cull waypoints 
 For this step you can use a collinearity test or ray tracing method like Bresenham. The idea is simply to prune your path of unnecessary waypoints. Explain the code you used to accomplish this step.
-
 
 
 ### Execute the flight
