@@ -30,7 +30,11 @@ You're reading it! Below I describe how I addressed each rubric point and where 
 ### Explain the Starter Code
 
 #### 1. Explain the functionality of what's provided in `motion_planning.py` and `planning_utils.py`
-These scripts contain a basic planning implementation that includes...
+
+motion_planning.py
+has the following functions implemented:
+
+planning_utils.py
 
 Here are some image illustration my results
 

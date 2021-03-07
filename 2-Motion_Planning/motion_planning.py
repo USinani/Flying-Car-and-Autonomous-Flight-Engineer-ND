@@ -116,13 +116,13 @@ class MotionPlanning(Drone):
         self.flight_state = States.PLANNING
         print("Searching for a path ...")
         TARGET_ALTITUDE = 5
-        SAFETY_DISTANCE = 5
+        SAFETY_DISTANCE = 6
 
         self.target_position[2] = TARGET_ALTITUDE
-
-        colliders_file = 'colliders.csv'
+        # relative path of the file
+        collidersf = '2-Motion_Planning/colliders.csv'
         # TODO: read lat0, lon0 from colliders into floating point values
-        lat0, lon0 = read_home(colliders_file)
+        lat0, lon0 = read_home(collidersf)
         print(f'Home lat : {lat0}, lon : {lon0}')
         # # # TODO: set home position to (lat0, lon0, 0)
         self.set_home_position(lon0, lat0, 0)
@@ -136,7 +136,7 @@ class MotionPlanning(Drone):
         print('global home {0}, position {1}, local position {2}'.format(self.global_home, self.global_position,
                                                                          self.local_position))
         # Read in obstacle map
-        data = np.loadtxt(colliders_file, delimiter=',', dtype='Float64', skiprows=3)
+        data = np.loadtxt(collidersf, delimiter=',', dtype='Float64', skiprows=3)
 
         # Define a grid for a particular altitude and safety margin around obstacles
         grid, north_offset, east_offset = create_grid(data, TARGET_ALTITUDE, SAFETY_DISTANCE)

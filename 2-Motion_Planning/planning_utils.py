@@ -1,7 +1,31 @@
 from enum import Enum
 from queue import PriorityQueue
 import numpy as np
+import re
 
+
+# Assume all actions cost the same.
+class Action(Enum):
+    """
+    An action is represented by a 3 element tuple.
+
+    The first 2 values are the delta of the action relative
+    to the current grid position. The third and final value
+    is the cost of performing the action.
+    """
+
+    WEST = (0, -1, 1)
+    EAST = (0, 1, 1)
+    NORTH = (-1, 0, 1)
+    SOUTH = (1, 0, 1)
+
+    @property
+    def cost(self):
+        return self.value[2]
+
+    @property
+    def delta(self):
+        return (self.value[0], self.value[1])
 
 def create_grid(data, drone_altitude, safety_distance):
     """
@@ -40,31 +64,6 @@ def create_grid(data, drone_altitude, safety_distance):
 
     return grid, int(north_min), int(east_min)
 
-
-# Assume all actions cost the same.
-class Action(Enum):
-    """
-    An action is represented by a 3 element tuple.
-
-    The first 2 values are the delta of the action relative
-    to the current grid position. The third and final value
-    is the cost of performing the action.
-    """
-
-    WEST = (0, -1, 1)
-    EAST = (0, 1, 1)
-    NORTH = (-1, 0, 1)
-    SOUTH = (1, 0, 1)
-
-    @property
-    def cost(self):
-        return self.value[2]
-
-    @property
-    def delta(self):
-        return (self.value[0], self.value[1])
-
-
 def valid_actions(grid, current_node):
     """
     Returns a list of valid actions given a grid and current node.
@@ -86,7 +85,6 @@ def valid_actions(grid, current_node):
         valid_actions.remove(Action.EAST)
 
     return valid_actions
-
 
 def a_star(grid, h, start, goal):
     """" This function helps implement A* search algorithm"""
@@ -139,25 +137,24 @@ def a_star(grid, h, start, goal):
         print('**********************') 
     return path[::-1], path_cost
 
-
-
 def heuristic(position, goal_position):
     return np.linalg.norm(np.array(position) - np.array(goal_position))
 
 def read_home(filename):
     """
-    This functio will read the lon0, lat0 from the first line of the 'file'
+    This function will read the lon0, lat0 from the first line of the 'file'
 
     """
 
     with open(filename) as f:
         first_line = f.readline()
-    match = re.match (r'ˆlat0 {}, lon0{}',first_line)
+        # imported from re library
+        match = re.match (r'ˆlat0{}, lon0{}',first_line)
 
     if match:
         lat = match.group(1)
         lon = match.group(2)
-    return np.fromstring(f'{lat}', '{lon}', dtype = 'Float 64', sep = ',')
+    return np.fromstring("{}, {}".format(lat, lon), dtype = 'Float 64', sep = ',')
 
 def collinearity_prune(path, epsilon = 1e-5):
     """
