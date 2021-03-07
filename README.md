@@ -1,2 +1,6 @@
 # Flight-Car-and-Autonomous-Flight-Engineer-ND
-Flight Car and Autonomous Flight Engineer Nanodegree
+Udacity projects during this Nanodeegre were as follows:
+-Backyard Flyer
+-Building an Estimator
+-Controls - Crazyfly
+-Motion Planning
