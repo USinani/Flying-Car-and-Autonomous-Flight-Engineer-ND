@@ -70,9 +70,6 @@ class BackyardFlyer(Drone):
                 else:
                     self.landing_transition()
 
-
-
-
     def velocity_callback(self):
         """
         TODO: Implement this method
@@ -98,7 +95,6 @@ class BackyardFlyer(Drone):
         if self.flight_state == States.DISARMING and not self.armed:
             self.manual_transition()
             
-
     def calculate_box(self):
         """TODO: Fill out this method
         
@@ -115,7 +111,6 @@ class BackyardFlyer(Drone):
                 np.array([cn, ce, ca])
 
                 ]
-
 
     def arming_transition(self):
         """TODO: Fill out this method
@@ -136,7 +131,6 @@ class BackyardFlyer(Drone):
         
         self.flight_state = States.ARMING
 
-
     def takeoff_transition(self):
         """TODO: Fill out this method
         
@@ -155,7 +149,6 @@ class BackyardFlyer(Drone):
 
         # 3. Transition to the TAKEOFF state
         self.flight_state = States.TAKEOFF
-
 
     def waypoint_transition(self):
         """TODO: Fill out this method
