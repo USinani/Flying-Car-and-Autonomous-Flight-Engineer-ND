@@ -81,10 +81,33 @@ posX,posY,posZ,halfSizeX,halfSizeY,halfSizeZ
 #### 2. Set your current local position
 Here as long as you successfully determine your local position relative to global home you'll be all set. Explain briefly how you accomplished this in your code.
 
+The current local position is as follows:
+
+'''
+ def local_position_callback(self):
+        if self.flight_state == States.TAKEOFF:
+            if -1.0 * self.local_position[2] > 0.95 * self.target_position[2]:
+                self.waypoint_transition()
+        elif self.flight_state == States.WAYPOINT:
+            if np.linalg.norm(self.target_position[0:2] - self.local_position[0:2]) < 1.0:
+                if len(self.waypoints) > 0:
+                    self.waypoint_transition()
+                else:
+                    if np.linalg.norm(self.local_velocity[0:2]) < 1.0:
+                        self.landing_transition()
+
+'''
+
+
 Meanwhile, here's a picture of me flying through the trees!
 ![Forest Flying](./misc/in_the_trees.png)
 
 #### 3. Set grid start position from local position
+
+Setting the grid start position from the local position. 
+
+
+
 This is another step in adding flexibility to the start location. As long as it works you're good to go!
 
 #### 4. Set grid goal position from geodetic coords

@@ -112,9 +112,10 @@ class MotionPlanning(Drone):
         data = msgpack.dumps(self.waypoints)
         self.connection._master.write(data)
 
+# Method to be completed from the seed project
     def plan_path(self):
         self.flight_state = States.PLANNING
-        print("Searching for a path ...")
+        print("Searching for a flight path ...")
         TARGET_ALTITUDE = 5
         SAFETY_DISTANCE = 6
 

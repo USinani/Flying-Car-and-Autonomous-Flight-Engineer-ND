@@ -2,7 +2,7 @@ from enum import Enum
 from queue import PriorityQueue
 import numpy as np
 import re
-
+from math import sqrt
 
 # Assume all actions cost the same.
 class Action(Enum):
@@ -18,7 +18,11 @@ class Action(Enum):
     EAST = (0, 1, 1)
     NORTH = (-1, 0, 1)
     SOUTH = (1, 0, 1)
-
+    SOUTH_EAST = (1, 1, sqrt(2))
+    NORTH_EAST = (-1, 1, sqrt(2))
+    SOUTH_WEST = (1, -1, sqrt(2))
+    NORTH_WEST = (-1, -1, sqrt(2))
+    
     @property
     def cost(self):
         return self.value[2]
@@ -145,7 +149,7 @@ def read_home(filename):
     This function will read the lon0, lat0 from the first line of the 'file'
 
     """
-
+    # open, read and match the file
     with open(filename) as f:
         first_line = f.readline()
         # imported from re library
