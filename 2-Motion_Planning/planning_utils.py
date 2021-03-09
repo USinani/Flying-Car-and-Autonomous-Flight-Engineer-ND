@@ -152,8 +152,9 @@ def read_home(filename):
     # open, read and match the file
     with open(filename) as f:
         first_line = f.readline()
+        #lat, lon = first_line
         # imported from re library
-        match = re.match (r'ˆlat0{}, lon0{}',first_line)
+        match = re.match(r'^lat0 (.*), lon0 (.*)$', first_line)
 
     if match:
         lat = match.group(1)
