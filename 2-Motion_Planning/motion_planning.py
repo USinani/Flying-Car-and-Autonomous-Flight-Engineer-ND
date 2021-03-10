@@ -127,11 +127,11 @@ class MotionPlanning(Drone):
         # Assign target altitude value to target position []
         self.target_position[2] = TARGET_ALTITUDE
         # relative path of the file
-        collidersf = 'colliders.csv'
+        # collidersf = 'colliders.csv'
 
         # TODO: read lat0, lon0 from colliders into floating point values
         # read first row from collidersf
-        csvdata = np.genfromtxt(collidersf, delimiter=',' ,max_rows=1, dtype=None)
+        csvdata = np.genfromtxt('colliders.csv', delimiter=',' ,max_rows=1, dtype='Float64')
         
         lat = csvdata[0]
         lat = lat[5:]
