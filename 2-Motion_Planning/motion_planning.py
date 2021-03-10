@@ -114,8 +114,8 @@ class MotionPlanning(Drone):
     def plan_path(self):
         self.flight_state = States.PLANNING
         print("Searching for a path ...")
-        TARGET_ALTITUDE = 15
-        SAFETY_DISTANCE = 5
+        TARGET_ALTITUDE = 16
+        SAFETY_DISTANCE = 6
 
         self.target_position[2] = TARGET_ALTITUDE
 
