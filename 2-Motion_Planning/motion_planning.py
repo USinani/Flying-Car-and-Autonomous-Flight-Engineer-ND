@@ -131,7 +131,7 @@ class MotionPlanning(Drone):
 
         # TODO: read lat0, lon0 from colliders into floating point values
         # read first row from collidersf
-        csvdata = np.genfromtxt(collidersf, delimiter=',',max_rows=1,dtype=None)
+        csvdata = np.genfromtxt(collidersf, delimiter=',' ,max_rows=1, dtype=None)
         
         lat = csvdata[0]
         lat = lat[5:]
@@ -153,9 +153,9 @@ class MotionPlanning(Drone):
         # TODO: retrieve current global position
         glob_position = [self._longitude, self._latitude, self._altitude]
 
-        local_north, local_east, local_down = global_to_local(self.global_position, self.global_home)
+        # local_north, local_east, local_down = global_to_local(self.global_position, self.global_home)
         # display for respective coordinates values
-        print(f'Local => north : {local_north}, east : {local_east}, down : {local_down}')
+        # print(f'Local => north : {local_north}, east : {local_east}, down : {local_down}')
 
         # TODO: convert to current local position using global_to_local()
         loc_position = global_to_local(glob_position, self.global_home)
@@ -186,8 +186,8 @@ class MotionPlanning(Drone):
         # grid_goal = (int(np.ceil(goal_north - north_offset)), int(np.ceil(goal_east - east_offset)))
         
         # TODO: adapt to set goal as latitude / longitude position and convert
-        goal_lon = -121.34
-        goal_lat = 34.76
+        goal_lon = -121.342321
+        goal_lat = 34.766864
         goal_alt = TARGET_ALTITUDE
 
         global_goal = [goal_lon, goal_lat, goal_alt]
@@ -201,12 +201,12 @@ class MotionPlanning(Drone):
         path, _ = a_star(grid, heuristic, grid_start, grid_goal)
 
         # TODO: prune path to minimize number of waypoints
-        path = collinearity_prune(path)
+        # path = collinearity_prune(path)
         pruned_path = self.prune_path(path)
         # TODO (if you're feeling ambitious): Try a different approach altogether!
 
         # Convert path to waypoints
-        waypoints = [[int(p[0] + north_offset), int(p[1] + east_offset), TARGET_ALTITUDE, 0] for p in path]
+        waypoints = [[int(p[0] + north_offset), int(p[1] + east_offset), TARGET_ALTITUDE, 0] for p in pruned_path]
         # Set self.waypoints
         self.waypoints = waypoints
         # TODO: send waypoints to sim
