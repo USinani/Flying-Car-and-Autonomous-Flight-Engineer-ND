@@ -265,8 +265,8 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     conn = MavlinkConnection('tcp:{0}:{1}'.format(args.host, args.port), timeout=60)
-    goal_global_position = np.fromstring(f'{args.goal_lon},{args.goal_lat},{args.goal_alt}', dtype='Float64', sep=',')
-    drone = MotionPlanning(conn, goal_global_position=goal_global_position)
+    # goal_global_position = np.fromstring(f'{args.goal_lon},{args.goal_lat},{args.goal_alt}', dtype='Float64', sep=',')
+    drone = MotionPlanning(conn)
     time.sleep(1)
 
     drone.start()
