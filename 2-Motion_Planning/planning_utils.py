@@ -4,32 +4,6 @@ import numpy as np
 import re
 from math import sqrt
 
-# Assume all actions cost the same.
-class Action(Enum):
-    """
-    An action is represented by a 3 element tuple.
-
-    The first 2 values are the delta of the action relative
-    to the current grid position. The third and final value
-    is the cost of performing the action.
-    """
-
-    WEST = (0, -1, 1)
-    EAST = (0, 1, 1)
-    NORTH = (-1, 0, 1)
-    SOUTH = (1, 0, 1)
-    SOUTH_EAST = (1, 1, sqrt(2))
-    NORTH_EAST = (-1, 1, sqrt(2))
-    SOUTH_WEST = (1, -1, sqrt(2))
-    NORTH_WEST = (-1, -1, sqrt(2))
-    
-    @property
-    def cost(self):
-        return self.value[2]
-
-    @property
-    def delta(self):
-        return (self.value[0], self.value[1])
 
 def create_grid(data, drone_altitude, safety_distance):
     """
@@ -68,6 +42,33 @@ def create_grid(data, drone_altitude, safety_distance):
 
     return grid, int(north_min), int(east_min)
 
+# Assume all actions cost the same.
+class Action(Enum):
+    """
+    An action is represented by a 3 element tuple.
+
+    The first 2 values are the delta of the action relative
+    to the current grid position. The third and final value
+    is the cost of performing the action.
+    """
+
+    WEST = (0, -1, 1)
+    EAST = (0, 1, 1)
+    NORTH = (-1, 0, 1)
+    SOUTH = (1, 0, 1)
+    SOUTH_EAST = (1, 1, sqrt(2))
+    NORTH_EAST = (-1, 1, sqrt(2))
+    SOUTH_WEST = (1, -1, sqrt(2))
+    NORTH_WEST = (-1, -1, sqrt(2))
+    
+    @property
+    def cost(self):
+        return self.value[2]
+
+    @property
+    def delta(self):
+        return (self.value[0], self.value[1])
+
 def valid_actions(grid, current_node):
     """
     Returns a list of valid actions given a grid and current node.
@@ -92,6 +93,7 @@ def valid_actions(grid, current_node):
 
 def a_star(grid, h, start, goal):
     """" This function helps implement A* search algorithm"""
+    
     path = []
     path_cost = 0
     queue = PriorityQueue()
@@ -103,7 +105,9 @@ def a_star(grid, h, start, goal):
     
     while not queue.empty():
         item = queue.get()
+        # assign values for current_node and cost vars
         current_node = item[1]
+        currnet_cost = item[0]
         if current_node == start:
             current_cost = 0.0
         else:              
@@ -116,15 +120,17 @@ def a_star(grid, h, start, goal):
         else:
             for action in valid_actions(grid, current_node):
                 # get the tuple representation
-                da = action.delta
-                next_node = (current_node[0] + da[0], current_node[1] + da[1])
+                action_delta = action.delta
+                next_node = (current_node[0] + action_delta[0], current_node[1] + action_delta[1])
                 branch_cost = current_cost + action.cost
                 queue_cost = branch_cost + h(next_node, goal)
                 
                 if next_node not in visited:                
                     visited.add(next_node)               
-                    branch[next_node] = (branch_cost, current_node, action)
+                    
                     queue.put((queue_cost, next_node))
+
+                    branch[next_node] = (branch_cost, current_node, action)
              
     if found:
         # retrace steps
@@ -154,7 +160,7 @@ def read_home(filename):
         first_line = f.readline()
         #lat, lon = first_line
         # imported from re library
-        match = re.match(r'^lat0 (.*), lon0 (.*)$', first_line)
+    match = re.match(r'^lat0 (.*), lon0 (.*)$', first_line)
 
     if match:
         lat = match.group(1)
