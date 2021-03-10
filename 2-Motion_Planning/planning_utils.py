@@ -42,7 +42,7 @@ def create_grid(data, drone_altitude, safety_distance):
 
     return grid, int(north_min), int(east_min)
 
-# Assume all actions cost the same.
+# Assume all action cost are the same.
 class Action(Enum):
     """
     An action is represented by a 3 element tuple.
