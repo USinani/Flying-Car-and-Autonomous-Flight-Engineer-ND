@@ -1,6 +1,7 @@
 # Project Report #
 
-This is the project report for FCND-Controls project.
+This is the project report for FCND-Controls project forked from Udacity FCND-Controls.
+
 
 Below is shown the outline of the report:
 
@@ -33,12 +34,40 @@ To accomplish this, you will:
 1. Implement body rate control
 
  - implement the code in the function `GenerateMotorCommands()`
- - implement the code in the function `BodyRateControl()`
- - Tune `kpPQR` in `QuadControlParams.txt` to get the vehicle to stop spinning quickly but not overshoot
+  Below is shown an excerpt of the source code from QuadControl.cpp file part of the final solution of the project.
+  ////////////////////////////// BEGIN STUDENT CODE ///////////////////////////
 
-If successful, you should see the rotation of the vehicle about roll (omega.x) get controlled to 0 while other rates remain zero.  Note that the vehicle will keep flying off quite quickly, since the angle is not yet being controlled back to 0.  Also note that some overshoot will happen due to motor dynamics!.
+    float X, Y, Z, S;
+    float l = L/sqrtf(2.f);
+    float F, F1, F2, F3;
+    
+  // INPUTS:
+  //   collThrustCmd: desired collective thrust [N]
+    S = collThrustCmd/4.f;
+    
+  //   momentCmd: desired rotation moment about each axis [N m]
+    X = momentCmd.x/(l*4.f);
+    Y = momentCmd.y/(l*4.f);
+    Z = momentCmd.z/(kappa*4.f);
+    
+    F = S + X + Y - Z;
+    F1 = S - X + Y + Z;
+    F2 = S + X - Y + Z;
+    F3 = S - X - Y - Z;
+    
+    // OUTPUT:
+  //   set class member variable cmd (class variable for graphing) where
+  //   cmd.desiredThrustsN[0..3]: motor commands, in [N]
+    
+  cmd.desiredThrustsN[0] = F; // front left
+  cmd.desiredThrustsN[1] = F1; // front right
+  cmd.desiredThrustsN[2] = F2; // rear left
+  cmd.desiredThrustsN[3] = F3; // rear right
 
-If you come back to this step after the next step, you can try tuning just the body rate omega (without the outside angle controller) by setting `QuadControlParams.kpBank = 0`.
+accordinly the code is completed `BodyRateControl()` and following function that render the solution to the tasks successful. 
+
+ Tuning `kpPQR` in `QuadControlParams.txt` I got the following results from the simulator. 
+
 
 2. Implement roll / pitch control
 We won't be worrying about yaw just yet.
@@ -49,7 +78,7 @@ We won't be worrying about yaw just yet.
 If successful you should now see the quad level itself (as shown below), though it’ll still be flying away slowly since we’re not controlling velocity/position!  You should also see the vehicle angle (Roll) get controlled to 0.
 
 <p align="center">
-<img src="animations/scenario2.gif" width="500"/>
+<img src="animations/scenario2.png" width="500"/>
 </p>
 
 
@@ -70,7 +99,7 @@ If successful, the quads should be going to their destination points and trackin
 Tune position control for settling time. Don’t try to tune yaw control too tightly, as yaw control requires a lot of control authority from a quadcopter and can really affect other degrees of freedom.  This is why you often see quadcopters with tilted motors, better yaw authority!
 
 <p align="center">
-<img src="animations/scenario3.gif" width="500"/>
+<img src="animations/scenario3.png" width="500"/>
 </p>
 
 **Hint:**  For a second order system, such as the one for this quadcopter, the velocity gain (`kpVelXY` and `kpVelZ`) should be at least ~3-4 times greater than the respective position gain (`kpPosXY` and `kpPosZ`).
@@ -114,7 +143,7 @@ Did the velocity-specified trajectory make a difference? Why?
 With the two different trajectories, your drones' motions should look like this:
 
 <p align="center">
-<img src="animations/scenario5.gif" width="500"/>
+<img src="animations/scenario5.png" width="500"/>
 </p>
 
 
