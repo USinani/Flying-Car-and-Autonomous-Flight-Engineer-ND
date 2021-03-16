@@ -1,9 +1,7 @@
 # Estimation Project #
 ## Project writeup ##
 
-Welcome to the estimation project.  In this project, you will be developing the estimation portion of the controller used in the CPP simulator.  By the end of the project, your simulated quad will be flying with your estimator and your custom controller (from the previous project)!
-
-This README is broken down into the following sections:
+This project contains the following sections:
 
  - [Setup](#setup) - the environment and code setup required to get started and a brief overview of the project structure
  - [The Tasks](#the-tasks) - the tasks you will need to complete for the project
