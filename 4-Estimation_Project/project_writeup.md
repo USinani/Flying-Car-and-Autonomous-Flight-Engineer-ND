@@ -17,7 +17,7 @@ The evaluation of the projects tasks' was done in the CPP simulator auto-grading
 
 (The project scenarios - which were not part of the assessment - included also the previuosly tuned scenarios which can be found: https://github.com/USinani/Flying-Car-and-Autonomous-Flight-Engineer-ND/blob/main/3-Quadrotor_Controls/Writeup_report.md)
 
-(An illustration scenario of the evaluation from the simulator environment: ../img/pass_or_fail.png)
+(An illustration scenario of the evaluation from the simulator environment: ../images/Sensor-noise-pass.png)
 
 
 ### Sensor Noise ###
