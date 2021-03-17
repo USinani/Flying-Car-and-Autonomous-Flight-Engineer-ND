@@ -17,7 +17,7 @@ The evaluation of the projects tasks' was done in the CPP simulator auto-grading
 
 (The project scenarios - which were not part of the assessment - included also the previuosly tuned scenarios which can be found: https://github.com/USinani/Flying-Car-and-Autonomous-Flight-Engineer-ND/blob/main/3-Quadrotor_Controls/Writeup_report.md)
 
-(An illustration scenario of the evaluation from the simulator environment: ../images/Sensor-noise-pass.png)
+(An illustration scenario of the evaluation from the simulator environment: ![example, pass](images/06-Sensor-noise-pass.png)
 
 
 ### Sensor Noise ###
@@ -25,7 +25,7 @@ The evaluation of the projects tasks' was done in the CPP simulator auto-grading
 For the controls project,the simulator was working with a perfect set of sensors, meaning none of the sensors had any noise.  The first step to adding additional realism to the problem, and developing an estimator, is adding noise to the quad's sensors.  For the first step, you will collect some simulated noisy sensor data and estimate the standard deviation of the quad's sensor.
 
 Running the simulator and selecting the 06_NoisySensors scenario the following results were obtained:
-../img/noisy_sensors.png
+![06 NoisySensors](images/06-sensor-noise-pass.png)
 
 
 ### Attitude Estimation ###
@@ -34,7 +34,7 @@ Now let's look at the first step to our state estimation: including information 
 
 In `QuadEstimatorEKF.cpp`, you will see the function `UpdateFromIMU()` contains a complementary filter-type attitude filter.  To reduce the errors in the estimated attitude (Euler Angles), implement a better rate gyro attitude integration scheme.  You should be able to reduce the attitude errors to get within 0.1 rad for each of the Euler angles, as shown in the screenshot below.
 
-![attitude example](images/attitude-screenshot.png)
+![attitude estimation](images/07-attitude-estimation.png)
 
 In the screenshot above the attitude estimation using linear scheme (left) and using the improved nonlinear scheme (right). Note that Y axis on error is much greater on left.
 
@@ -49,7 +49,7 @@ Implementing the prediction step of the filter introduced a close to realistic s
 
 Code implementation involved `QuadEstimatorEKF.cpp`, implementing the state prediction step in the `PredictState()` function. Running the scenario `08_PredictState` the estimator state track the actual state obtained is shown in the figure below:
 
-![predict state](images/predict-state.png)
+![predict state](images/08-predict-state.png)
 
 The following scenario `09_PredictionCov` introduced a realistic IMU, one with noise. Running it in the simulator a small fleet of quadcopters will appear - using the prediction code - and will simulate the case of forward integration. 
 
@@ -58,7 +58,7 @@ From the configuration aspect, running covariance prediction and tuning the `QPo
  
 A good solution looks as follows:
 
-![covariance](../images/predict-covariance.png)
+![covariance](images/09-predict-covariance.png)
 
 Note: Increased errors over time - in this simplified model - will not capture the real error dynamics (for example, specifically, coming from attitude errors), thus it is noticeable only for a relatively short prediction period (the scenario is set for one second).
    - The top graph shows 10 (prediction-only) position X estimates
@@ -96,6 +96,8 @@ Below are given the Implementation steps.
 
 3. Implementing magnetometer update in the function `UpdateFromMag()`.
 
+Magnetometer scenario - obtained results from the simulator.
+![Mag Update](images/10-mag-update.png)
 
 ***Success criteria:*** *The goal is to both have an estimated standard deviation that accurately captures the error and maintain an error of less than 0.1rad in heading for at least 10 seconds of the simulation.*
 
@@ -124,6 +126,10 @@ Adding the GPS update with the closed loop added additional drone handling to es
 
 6. Re-run the simulation with the objective to complete the entire simulation cycle with estimated position error of < 1m.
 
+GPS Updates scenario - obtained results from the simulator.
+![GPS Update](images/11-GPS-update-ideal.png)
+
+
 ***Success criteria:*** * Completion of the entire simulation cycle with estimated position error of < 1m.*
 
 **Hint: see section 7.3.1 of [Estimation for Quadrotors](https://www.overleaf.com/read/vymfngphcccj) for a refresher on the GPS update.**
@@ -140,8 +146,7 @@ This step required the replacement of the default controller - adept to work wit
 3. Running scenario `11_GPSUpdate`.
 
 Below is shown the result from the performance of the controller for all scenarios.
-![Own Controller gallery](images/all_scenarios.png)
-![Own Contoller movie](images/all_scenarios.mov)
+![Own Contoller movie](videos/6to11-all-scenarios.mov)
 
 
 **Hints: It is easier to do the de-tuning as a 2 step process by reverting to ideal sensors and de-tuning under those conditions first.**
