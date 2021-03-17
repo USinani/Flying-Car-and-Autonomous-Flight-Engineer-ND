@@ -4,25 +4,23 @@
 To completing this project the main tasks included the prediction of quadrotors by impementing Extended Kalman Filter (EKF) and integrating the previously tuned Controller and other configuration bits to tuning the Estimators' parameters for a good performance. 
 
 
-## Task Overview ##
+## Project tasks ##
 
 The evaluation of the projects tasks' was done in the CPP simulator auto-grading each task as pass or fail. The tasks included for the Estimation project were as follows. 
 
-Project outline:
-
- - [Step 1: Sensor Noise](#step-1-sensor-noise)
- - [Step 2: Attitude Estimation](#step-2-attitude-estimation)
- - [Step 3: Prediction Step](#step-3-prediction-step)
- - [Step 4: Magnetometer Update](#step-4-magnetometer-update)
- - [Step 5: Closed Loop + GPS Update](#step-5-closed-loop--gps-update)
- - [Step 6: Adding Your Controller](#step-6-adding-your-controller)
+ - [Sensor Noise](#step-1-sensor-noise)
+ - [Attitude Estimation](#step-2-attitude-estimation)
+ - [Prediction Step](#step-3-prediction-step)
+ - [Magnetometer Update](#step-4-magnetometer-update)
+ - [Closed Loop + GPS Update](#step-5-closed-loop--gps-update)
+ - [Adding Your Controller](#step-6-adding-your-controller)
 
 (The project scenarios - which were not part of the assessment - included also the previuosly tuned scenarios which can be found: https://github.com/USinani/Flying-Car-and-Autonomous-Flight-Engineer-ND/blob/main/3-Quadrotor_Controls/Writeup_report.md)
 
 (An illustration scenario of the evaluation from the simulator environment: ../img/pass_or_fail.png)
 
 
-### Step 1: Sensor Noise ###
+### Sensor Noise ###
 
 For the controls project, the simulator was working with a perfect set of sensors, meaning none of the sensors had any noise.  The first step to adding additional realism to the problem, and developing an estimator, is adding noise to the quad's sensors.  For the first step, you will collect some simulated noisy sensor data and estimate the standard deviation of the quad's sensor.
 
@@ -30,11 +28,11 @@ Running the simulator and selecting the 06_NoisySensors scenario the following r
 ../img/noisy_sensors.png
 
 
-### Step 2: Attitude Estimation ###
+### Attitude Estimation ###
 
 Now let's look at the first step to our state estimation: including information from our IMU.  In this step, you will be improving the complementary filter-type attitude filter with a better rate gyro attitude integration scheme.
 
-2. In `QuadEstimatorEKF.cpp`, you will see the function `UpdateFromIMU()` contains a complementary filter-type attitude filter.  To reduce the errors in the estimated attitude (Euler Angles), implement a better rate gyro attitude integration scheme.  You should be able to reduce the attitude errors to get within 0.1 rad for each of the Euler angles, as shown in the screenshot below.
+In `QuadEstimatorEKF.cpp`, you will see the function `UpdateFromIMU()` contains a complementary filter-type attitude filter.  To reduce the errors in the estimated attitude (Euler Angles), implement a better rate gyro attitude integration scheme.  You should be able to reduce the attitude errors to get within 0.1 rad for each of the Euler angles, as shown in the screenshot below.
 
 ![attitude example](images/attitude-screenshot.png)
 
@@ -45,7 +43,7 @@ In the screenshot above the attitude estimation using linear scheme (left) and u
 **Hints provided: section 7.1.2 of [Estimation for Quadrotors](https://www.overleaf.com/read/vymfngphcccj) for a refresher on a good non-linear complimentary filter for attitude using quaternions.**
 
 
-### Step 3: Prediction Step ###
+### Prediction Step ###
 
 Implementing the prediction step of the filter introduced a close to realistic scenario of an IMU onboard of the quadcopter. Running the scenario `08_PredictState` the follwoing illustration - estimating the state and that of the true state - were obtained.
 
@@ -86,7 +84,7 @@ Another set of bad examples is shown below for having a `QVelXYStd` too large (f
 ***Success criteria:*** *This step doesn't have any specific measurable criteria being checked.*
 
 
-### Step 4: Magnetometer Update ###
+### Magnetometer Update ###
 
 Up until now we've only used the accelerometer and gyro for our state estimation.  In this step, you will be adding the information from the magnetometer to improve your filter's performance in estimating the vehicle's heading.
 
@@ -107,7 +105,7 @@ Up until now we've only used the accelerometer and gyro for our state estimation
 **Hint: see section 7.3.2 of [Estimation for Quadrotors](https://www.overleaf.com/read/vymfngphcccj) for a refresher on the magnetometer update.**
 
 
-### Step 5: Closed Loop + GPS Update ###
+### Closed Loop + GPS Update ###
 
 1. Run scenario `11_GPSUpdate`.  At the moment this scenario is using both an ideal estimator and and ideal IMU.  Even with these ideal elements, watch the position and velocity errors (bottom right). As you see they are drifting away, since GPS update is not yet implemented.
 
@@ -129,32 +127,36 @@ Up until now we've only used the accelerometer and gyro for our state estimation
 
 **Hint: see section 7.3.1 of [Estimation for Quadrotors](https://www.overleaf.com/read/vymfngphcccj) for a refresher on the GPS update.**
 
-At this point, congratulations on having a working estimator!
 
-### Step 6: Adding Your Controller ###
+### Adding my own Controller ###
 
-Up to this point, we have been working with a controller that has been relaxed to work with an estimated state instead of a real state.  So now, you will see how well your controller performs and de-tune your controller accordingly.
+This step required the replacement of the default controller - adept to work with an estimated state - with the one from the previous project (Colltroller CPP project). Code implementation included the following steps
 
-1. Replace `QuadController.cpp` with the controller you wrote in the last project.
+1. Replacing `QuadController.cpp` with the controller written from previous project.
 
-2. Replace `QuadControlParams.txt` with the control parameters you came up with in the last project.
+2. Replacing `QuadControlParams.txt` with the control parameters from the last project.
 
-3. Run scenario `11_GPSUpdate`. If your controller crashes immediately do not panic. Flying from an estimated state (even with ideal sensors) is very different from flying with ideal pose. You may need to de-tune your controller. Decrease the position and velocity gains (we’ve seen about 30% detuning being effective) to stabilize it.  Your goal is to once again complete the entire simulation cycle with an estimated position error of < 1m.
+3. Running scenario `11_GPSUpdate`.
 
-**Hint: you may find it easiest to do your de-tuning as a 2 step process by reverting to ideal sensors and de-tuning under those conditions first.**
+Below is shown the result from the performance of the controller for all scenarios.
+![Own Controller gallery](images/all_scenarios.png)
+![Own Contoller movie](images/all_scenarios.mov)
 
-***Success criteria:*** *Your objective is to complete the entire simulation cycle with estimated position error of < 1m.*
+
+**Hints: It is easier to do the de-tuning as a 2 step process by reverting to ideal sensors and de-tuning under those conditions first.**
+
+***Success criteria:*** *The objective was to complete the entire simulation cycle with estimated position error of < 1m.*
 
 
-## Tips and Tricks ##
+## Tips and Tricks provided from Udacity ##
 
- - When it comes to transposing matrices, `.transposeInPlace()` is the function you want to use to transpose a matrix
+ - Transposing matrices, `.transposeInPlace()` is the function you want to use to transpose a matrix
 
  - The [Estimation for Quadrotors](https://www.overleaf.com/read/vymfngphcccj) document contains a helpful mathematical breakdown of the core elements on your estimator
 
-## Submission ##
+## Project requirement's summary ##
 
-For this project, you will need to submit:
+The completion of this project required the completion and submission of the following files:
 
  - a completed estimator that meets the performance criteria for each of the steps by submitting:
    - `QuadEstimatorEKF.cpp`
@@ -167,5 +169,5 @@ For this project, you will need to submit:
  - a write up addressing all the points of the rubric
 
 ## Authors ##
-
+Uljan Sinani &
 Thanks to Fotokite for the initial development of the project code and simulator.
